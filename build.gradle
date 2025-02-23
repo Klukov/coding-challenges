@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'groovy'
+    id 'com.diffplug.spotless' version '7.0.2'
+}
+
+group 'org.klukov'
+version '1.0-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.spockframework:spock-core:2.4-M5-groovy-3.0'
+    testImplementation 'org.codehaus.groovy:groovy:3.0.23'
+    testImplementation 'org.awaitility:awaitility:4.3.0'
+}
+
+spotless {
+    java {
+        importOrder()
+        removeUnusedImports()
+        cleanthat()
+        googleJavaFormat().aosp()
+        formatAnnotations()
+    }
+    groovy {
+        importOrder()
+        leadingTabsToSpaces()
+        endWithNewline()
+        trimTrailingWhitespace()
+        excludeJava()
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
